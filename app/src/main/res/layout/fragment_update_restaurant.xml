@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/background">
+
+    <ScrollView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/restaurant_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="Restaurant name"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="10sp"
+                    android:paddingTop="@dimen/floating_hint_margin"
+                    android:textColor="#fff"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <EditText
+                        android:id="@+id/opening_time_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edit_text_background"
+                        android:hint="Opening time"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="10sp"
+                        android:paddingTop="@dimen/floating_hint_margin"
+                        android:textColor="#fff"
+                        android:textSize="15sp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <EditText
+                        android:id="@+id/closing_time_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edit_text_background"
+                        android:hint="Closing time"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="10sp"
+                        android:paddingTop="@dimen/floating_hint_margin"
+                        android:textColor="#fff"
+                        android:textSize="15sp" />
+                </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/pick_for_current_location"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:drawableLeft="@mipmap/location"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:textColor="#fff"
+                android:text="Pick for current location"/>
+
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/address_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edit_text_background"
+                        android:hint="Restaurant address"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="10sp"
+                        android:paddingTop="@dimen/floating_hint_margin"
+                        android:textColor="#fff"
+                        android:textSize="15sp" />
+                </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/update_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/login_button_background"
+                android:text="UPDATE"
+                android:textAllCaps="false"
+                android:textColor="#fff" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
