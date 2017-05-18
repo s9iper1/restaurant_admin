@@ -10,11 +10,31 @@
     tools:context="com.byteshaft.restaurantadmin.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <include layout="@layout/main_table_layout" />
-
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+
+    <GridView
+        android:id="@+id/table_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30sp"
+        android:gravity="center"
+        android:numColumns="2">
+
+    </GridView>
+
+    <Button
+        android:id="@+id/add_table_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_background"
+        android:text="Add Table"
+        android:textAllCaps="false"
+        android:textColor="#fff" />
 </RelativeLayout>
