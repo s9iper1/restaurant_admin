@@ -22,10 +22,10 @@
 
     <item android:title="Admin">
         <menu>
-            <!--<item-->
-                <!--android:id="@+id/change_password"-->
-                <!--android:icon="@drawable/change_password"-->
-                <!--android:title="Change Password" />-->
+            <item
+                android:id="@+id/change_password"
+                android:icon="@drawable/change_password"
+                android:title="Change Password" />
             <item
                 android:id="@+id/admin_logout"
                 android:icon="@drawable/logout"

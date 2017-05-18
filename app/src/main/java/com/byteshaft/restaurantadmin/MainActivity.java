@@ -1,6 +1,7 @@
 package com.byteshaft.restaurantadmin;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,8 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.byteshaft.restaurantadmin.accountfragments.ChangePassword;
 import com.byteshaft.restaurantadmin.accountfragments.Login;
 import com.byteshaft.restaurantadmin.accountfragments.ResetPassword;
 import com.byteshaft.restaurantadmin.accountfragments.SignUp;
@@ -25,7 +31,10 @@ import com.byteshaft.restaurantadmin.restaurantfragments.UpdateRestaurant;
 import com.byteshaft.restaurantadmin.utils.AppGlobals;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AdapterView.OnItemClickListener{
+
+    private GridView tableView;
+    private Button mAddTableButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,8 @@ public class MainActivity extends AppCompatActivity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+        tableView = (GridView) findViewById(R.id.table_view);
+        mAddTableButton = (Button) findViewById(R.id.add_table_button);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         View headerView;
@@ -47,11 +58,11 @@ public class MainActivity extends AppCompatActivity
         headerView = navigationView.getHeaderView(0);
         TextView name = (TextView) headerView.findViewById(R.id.name);
         TextView email = (TextView) headerView.findViewById(R.id.email);
-
         name.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_RESTAURANT_NAME));
         email.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
-        System.out.println("boss" + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL));
-        System.out.println("boss" + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_RESTAURANT_NAME));
+        tableView.setOnItemClickListener(this);
+        mAddTableButton.setOnClickListener(this);
+
     }
 
     @Override
@@ -103,10 +114,10 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new UpdateRestaurant());
 
         }
-//        else if (id == R.id.change_password) {
-//            loadFragment(new ResetPassword());
-//
-//        }
+        else if (id == R.id.change_password) {
+            loadFragment(new ChangePassword());
+
+        }
         else if (id == R.id.admin_logout) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle("Confirmation");
@@ -139,5 +150,17 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.container, fragment);
         tx.commit();
+    }
+
+    @Override
+    public void onClick(View v) {
+        System.out.println("aunty ok ha");
+        startActivity(new Intent(this, TableDetails.class));
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }
