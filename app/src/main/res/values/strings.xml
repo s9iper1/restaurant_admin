@@ -29,6 +29,7 @@
     <string name="login_failed">Login Failed!</string>
     <string name="register_failed">Registration Failed!</string>
     <string name="update_failed">Update Failed!</string>
+    <string name="table_failed">Table details Failed!</string>
     <string name="check_password">Please enter correct password</string>
     <string name="email_not_exist">Email does not exist on server</string>
     <string name="activate_your_account">Please activate your account !</string>

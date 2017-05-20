@@ -24,6 +24,14 @@ public class AppGlobals extends Application {
     public static final String KEY_LOCATION = "location";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_ACCOUNT_TYPE = "account_type";
+    public static final String KEY_TABLE_LOCATION = "location";
+    public static final String KEY_TABLE_NUMBER = "table_number";
+    public static final String KEY_TABLE_STATUS = "serviceable";
+    public static final String KEY_TABLE_BOOKINGS = "bookings";
+    public static final String KEY_TABLE_ID = "id";
+    public static final String KEY_RESTAURANT_ID = "restaurant";
+    public static final String KEY_TABLE_BOOKING_TIME = "minimum_booking_time";
+    public static final String KEY_TABLE_CHAIRS = "number_of_chairs";
     public static final String KEY_TOKEN = "token";
     public static final String KEY_OPENING_TIME = "opening_time";
     public static final String KEY_CLOSING_TIME = "closing_time";
