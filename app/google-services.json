@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "727212100721",
+    "firebase_url": "https://tablebooking-b4fc8.firebaseio.com",
+    "project_id": "tablebooking-b4fc8",
+    "storage_bucket": "tablebooking-b4fc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727212100721:android:a915a2b4c1f6de20",
+        "android_client_info": {
+          "package_name": "com.byteshaft.restaurantadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "727212100721-77m0m1fq0uqbk1afcon73ifs5vcq2k89.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFu-wHCpNAxBPLZA8GoL8bHEwIeE84dpY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

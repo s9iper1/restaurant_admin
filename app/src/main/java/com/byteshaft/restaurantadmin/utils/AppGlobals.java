@@ -36,6 +36,7 @@ public class AppGlobals extends Application {
     public static final String KEY_OPENING_TIME = "opening_time";
     public static final String KEY_CLOSING_TIME = "closing_time";
     public static final String USER_ACTIVATION_KEY = "activation_key";
+    public static final String KEY_FCM_TOKEN = "token";
     public static final int LOCATION_ENABLE = 3;
 
 
