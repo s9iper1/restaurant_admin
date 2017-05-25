@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity
     private static MainActivity sInstance;
     private int currentArraySize = 0;
     public static boolean updated = false;
+    private boolean isLongPress = false;
+    private int positionOfDelete = -1;
 
     public static MainActivity getInstance() {
         return sInstance;
@@ -91,10 +94,41 @@ public class MainActivity extends AppCompatActivity
         tableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (!isLongPress) {
                 Intent intent = new Intent(getApplicationContext(), TableDetails.class);
                 intent.putExtra("serializer" , tableDetails.get(i));
                 intent.putExtra("position", i);
                 startActivity(intent);
+                } else {
+                    isLongPress = false;
+                }
+            }
+        });
+        tableView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.i("TAG", "item"  + tableDetails.get(i).getId());
+                isLongPress = true;
+                positionOfDelete = i;
+                final TableDetail tableDetail = tableDetails.get(i);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setTitle("Delete");
+                alertDialogBuilder.setMessage("Do you want to delete this table?")
+                        .setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        deleteTable(tableDetail.getId());
+                        dialog.dismiss();
+                    }
+                });
+                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                return false;
             }
         });
     }
@@ -102,6 +136,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        isLongPress = false;
         if (tableDetails.size() > currentArraySize || updated) {
             tableAdapter.notifyDataSetChanged();
             if (updated) {
@@ -248,6 +283,13 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
                         break;
+                    case HttpURLConnection.HTTP_NO_CONTENT:
+                        Log.i("TAG", request.getResponseText());
+                        Snackbar.make(findViewById(android.R.id.content), "Successfully Deleted",
+                                Snackbar.LENGTH_SHORT).show();
+                        tableDetails.remove(positionOfDelete);
+                        tableAdapter.notifyDataSetChanged();
+                        break;
                 }
         }
 
@@ -311,6 +353,15 @@ public class MainActivity extends AppCompatActivity
             TextView tableStatus;
             ImageView tableImage;
         }
+    }
 
+    private void deleteTable(int id) {
+        HttpRequest request = new HttpRequest(getApplicationContext());
+        request.setOnReadyStateChangeListener(this);
+        request.setOnErrorListener(this);
+        request.open("DELETE", String.format("%srestaurant/tables/%s", AppGlobals.BASE_URL, id));
+        request.setRequestHeader("Authorization", "Token " +
+                AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
+        request.send();
     }
 }
