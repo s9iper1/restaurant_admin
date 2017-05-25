@@ -1,11 +1,10 @@
 package com.byteshaft.restaurantadmin;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,10 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byteshaft.requests.HttpRequest;
+import com.byteshaft.restaurantadmin.gettersetter.TableDetail;
 import com.byteshaft.restaurantadmin.utils.AppGlobals;
 import com.byteshaft.restaurantadmin.utils.Helpers;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,9 +37,12 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
     private String mMinimumBookingTimeString;
     private String mChairString;
     private String mTableLocationString;
-
     private Button mSaveButton;
     private HttpRequest mRequest;
+    private String method = "POST";
+    private String url;
+    private TableDetail tableDetail;
+    private int position = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,16 +53,51 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
         mChair = (EditText) findViewById(R.id.chairs_edit_text);
         mTableLocation = (EditText) findViewById(R.id.table_location_edit_text);
         mSaveButton = (Button) findViewById(R.id.save_button);
-
         mSaveButton.setOnClickListener(this);
+        if (getIntent().getExtras() != null) {
+            method = "PUT";
+            position = getIntent().getIntExtra("position", -1);
+            tableDetail = (TableDetail) getIntent().getSerializableExtra("serializer");
+            getSupportActionBar().setTitle("Update Table");
+            mTableNumber.setText(String.valueOf(tableDetail.getTableNumber()));
+            mMinimumBookingTime.setText(String.valueOf(tableDetail.getMinimumBookingTime()));
+            mChair.setText(String.valueOf(tableDetail.getNumberOfChair()));
+            mTableLocation.setText(String.valueOf(tableDetail.getLocationInRestaurant()));
+            mSaveButton.setText("Update");
+        } else {
+            mTableNumber.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    if(!charSequence.toString().trim().isEmpty()) {
+                        int tableNumber = Integer.valueOf(charSequence.toString());
+                        if (MainActivity.getInstance().alreadyAddedTableNumber.contains(tableNumber)) {
+                            mTableNumber.setError("Table already exist");
+                        } else {
+                            mTableNumber.setError(null);
+                        }
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+
+                }
+            });
+        }
+
     }
 
     @Override
     public void onClick(View v) {
         if (validate()) {
-            addTableDetails(mTableNumberString, mTableNumberString, mMinimumBookingTimeString, mTableLocationString);
+            addTableDetails(mTableNumberString, mChairString, mMinimumBookingTimeString, mTableLocationString);
         }
-
     }
 
     @Override
@@ -74,6 +111,37 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
                 Helpers.showSnackBar(findViewById(R.id.content_main), exception.getLocalizedMessage());
                 break;
         }
+    }
+
+    private void addTableDetails(String tableNumber, String numberOfChairs, String minimumBookingTime, String location) {
+        mRequest = new HttpRequest(this);
+        mRequest.setOnReadyStateChangeListener(this);
+        mRequest.setOnErrorListener(this);
+        String dialogtext = "Adding table";
+        if (method.equals("POST")) {
+            url = String.format("%srestaurant/tables/", AppGlobals.BASE_URL);
+        } else {
+            dialogtext = "updating table";
+            url = String.format("%srestaurant/tables/%s", AppGlobals.BASE_URL, tableDetail.getId());
+        }
+        mRequest.open(method, url);
+        mRequest.setRequestHeader("Authorization", "Token " +
+                AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
+        mRequest.send(getTableData(tableNumber, numberOfChairs, minimumBookingTime, location));
+        Helpers.showProgressDialog(TableDetails.this, dialogtext);
+    }
+
+    private String getTableData(String tableNumber, String numberOfChairs, String minimumBookingTime, String location) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("table_number", tableNumber);
+            jsonObject.put("number_of_chairs", numberOfChairs);
+            jsonObject.put("minimum_booking_time", minimumBookingTime);
+            jsonObject.put("location", location);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
 
     }
 
@@ -92,57 +160,46 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
                         break;
                     case HttpURLConnection.HTTP_CREATED:
                         Toast.makeText(TableDetails.this, "Table added successfully", Toast.LENGTH_SHORT).show();
-                        System.out.println(request.getResponseText() + "working ");
                         try {
                             JSONObject jsonObject = new JSONObject(request.getResponseText());
-                            String tableNumber = jsonObject.getString(AppGlobals.KEY_TABLE_NUMBER);
-                            String tableChairs = jsonObject.getString(AppGlobals.KEY_TABLE_CHAIRS);
-                            String bookingTime = jsonObject.getString(AppGlobals.KEY_TABLE_BOOKING_TIME);
-                            String tableLocation = jsonObject.getString(AppGlobals.KEY_TABLE_LOCATION);
-                            String tableId = jsonObject.getString(AppGlobals.KEY_TABLE_ID);
-                            String restaurantId = jsonObject.getString(AppGlobals.KEY_RESTAURANT_ID);
-                            String tableStatus = jsonObject.getString(AppGlobals.KEY_TABLE_STATUS);
-                            
-
-                            //saving values
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TABLE_NUMBER, tableNumber);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TABLE_CHAIRS, tableChairs);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TABLE_BOOKING_TIME, bookingTime);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TABLE_LOCATION, tableLocation);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TABLE_ID, tableId);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_RESTAURANT_ID, restaurantId);
-                            AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_TABLE_STATUS, tableStatus);
+                            TableDetail tableDetail = new TableDetail();
+                            tableDetail.setId(jsonObject.getInt("id"));
+                            tableDetail.setRestaurantId(jsonObject.getInt("id"));
+                            tableDetail.setServiceAble(jsonObject.getBoolean("serviceable"));
+                            tableDetail.setTableNumber(jsonObject.getInt("table_number"));
+                            tableDetail.setNumberOfChair(jsonObject.getInt("number_of_chairs"));
+                            tableDetail.setMinimumBookingTime(jsonObject.getInt("minimum_booking_time"));
+                            tableDetail.setLocationInRestaurant(jsonObject.getString("location"));
+                            MainActivity.getInstance().alreadyAddedTableNumber.add(jsonObject.getInt("table_number"));
+                            MainActivity.getInstance().tableDetails.add(tableDetail);
                             finish();
-                            startActivity(new Intent(TableDetails.this, MainActivity.class));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        break;
+                    case HttpURLConnection.HTTP_OK:
+                        Toast.makeText(TableDetails.this, "Table updated successfully", Toast.LENGTH_SHORT).show();
+                        try {
+                            JSONObject jsonObject = new JSONObject(request.getResponseText());
+                            TableDetail tableDetail = new TableDetail();
+                            tableDetail.setId(jsonObject.getInt("id"));
+                            tableDetail.setRestaurantId(jsonObject.getInt("id"));
+                            tableDetail.setServiceAble(jsonObject.getBoolean("serviceable"));
+                            tableDetail.setTableNumber(jsonObject.getInt("table_number"));
+                            tableDetail.setNumberOfChair(jsonObject.getInt("number_of_chairs"));
+                            tableDetail.setMinimumBookingTime(jsonObject.getInt("minimum_booking_time"));
+                            tableDetail.setLocationInRestaurant(jsonObject.getString("location"));
+                            MainActivity.getInstance().tableDetails.remove(position);
+                            MainActivity.getInstance().alreadyAddedTableNumber.add(jsonObject.getInt("table_number"));
+                            MainActivity.getInstance().tableDetails.add(tableDetail);
+                            MainActivity.updated = true;
+                            finish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        break;
                 }
         }
-
-    }
-
-    private void addTableDetails(String tableNumber, String numberOfChairs, String minimumBookingTime, String location) {
-        mRequest = new HttpRequest(this);
-        mRequest.setOnReadyStateChangeListener(this);
-        mRequest.setOnErrorListener(this);
-        mRequest.open("POST", String.format("%srestaurant/tables/", AppGlobals.BASE_URL));
-        mRequest.setRequestHeader("Authorization", "Token " +
-                AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
-        mRequest.send(getTableData(tableNumber, numberOfChairs, minimumBookingTime, location));
-        Helpers.showProgressDialog(TableDetails.this, "updating your profile..");
-    }
-    private String getTableData(String tableNumber, String numberOfChairs, String minimumBookingTime, String location) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("table_number", tableNumber);
-            jsonObject.put("number_of_chairs", numberOfChairs);
-            jsonObject.put("minimum_booking_time", minimumBookingTime);
-            jsonObject.put("location", location);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonObject.toString();
 
     }
 
@@ -153,9 +210,13 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
         mChairString = mChair.getText().toString();
         mTableLocationString = mTableLocation.getText().toString();
         System.out.println(mChairString + "chairs");
-
+        if (MainActivity.getInstance().alreadyAddedTableNumber
+                .contains(Integer.valueOf(mTableNumberString))) {
+            Toast.makeText(this, "This table Number already added", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
         if (mTableNumberString.trim().isEmpty()) {
-            mTableNumber.setError("please table number");
+            mTableNumber.setError("please add table number");
             valid = false;
         } else {
             mTableNumber.setError(null);
