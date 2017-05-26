@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/background_dark">
+    android:background="@drawable/food">
 
     <Spinner
         android:layout_marginTop="80dp"
@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:textColor="#d3d3d3"
         android:hint="Weight (1/2 kg)"
+        android:inputType="number"
         android:textColorHint="@color/colorAccent"
         android:layout_margin="5dp"/>
     </android.support.design.widget.TextInputLayout>
@@ -54,6 +55,7 @@
         android:layout_height="wrap_content"
         android:textColor="#d3d3d3"
         android:hint="price"
+        android:inputType="number"
         android:textColorHint="@color/colorAccent"
         android:layout_margin="5dp"/>
 

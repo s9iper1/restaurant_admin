@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.tables) {
-
+            loadFragment(new TablesFragment());
         } else if (id == R.id.restaurant_menu) {
             loadFragment(new MenuMain());
         } else if (id == R.id.promotions) {
