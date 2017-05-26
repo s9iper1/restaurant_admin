@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/background_dark">
+
+    <Spinner
+        android:layout_marginTop="80dp"
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+    <EditText
+        android:id="@+id/menu_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sub menu item"
+        android:textColor="#d3d3d3"
+        android:textColorHint="@color/colorAccent"
+        android:layout_margin="5dp" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+    <EditText
+        android:id="@+id/menu_item_weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#d3d3d3"
+        android:hint="Weight (1/2 kg)"
+        android:textColorHint="@color/colorAccent"
+        android:layout_margin="5dp"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+    <EditText
+        android:id="@+id/menu_item_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#d3d3d3"
+        android:hint="price"
+        android:textColorHint="@color/colorAccent"
+        android:layout_margin="5dp"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/save"
+        android:layout_marginTop="10dp"
+        android:text="save"
+        android:textColor="@android:color/white"
+        android:background="@color/colorAccent"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

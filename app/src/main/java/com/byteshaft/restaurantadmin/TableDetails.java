@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.byteshaft.requests.HttpRequest;
 import com.byteshaft.restaurantadmin.gettersetter.TableDetail;
+import com.byteshaft.restaurantadmin.restaurantfragments.TablesFragment;
 import com.byteshaft.restaurantadmin.utils.AppGlobals;
 import com.byteshaft.restaurantadmin.utils.Helpers;
 
@@ -47,6 +49,8 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         setContentView(R.layout.activity_table_details);
         mTableNumber = (EditText) findViewById(R.id.table_number_edit_text);
         mMinimumBookingTime = (EditText) findViewById(R.id.minimum_booking_edit_text);
@@ -75,7 +79,7 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     if(!charSequence.toString().trim().isEmpty()) {
                         int tableNumber = Integer.valueOf(charSequence.toString());
-                        if (MainActivity.getInstance().alreadyAddedTableNumber.contains(tableNumber)) {
+                        if (TablesFragment.getInstance().alreadyAddedTableNumber.contains(tableNumber)) {
                             mTableNumber.setError("Table already exist");
                         } else {
                             mTableNumber.setError(null);
@@ -91,6 +95,16 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
             });
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default: return false;
+        }
     }
 
     @Override
@@ -170,8 +184,8 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
                             tableDetail.setNumberOfChair(jsonObject.getInt("number_of_chairs"));
                             tableDetail.setMinimumBookingTime(jsonObject.getInt("minimum_booking_time"));
                             tableDetail.setLocationInRestaurant(jsonObject.getString("location"));
-                            MainActivity.getInstance().alreadyAddedTableNumber.add(jsonObject.getInt("table_number"));
-                            MainActivity.getInstance().tableDetails.add(tableDetail);
+                            TablesFragment.getInstance().alreadyAddedTableNumber.add(jsonObject.getInt("table_number"));
+                            TablesFragment.getInstance().tableDetails.add(tableDetail);
                             finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -189,10 +203,10 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
                             tableDetail.setNumberOfChair(jsonObject.getInt("number_of_chairs"));
                             tableDetail.setMinimumBookingTime(jsonObject.getInt("minimum_booking_time"));
                             tableDetail.setLocationInRestaurant(jsonObject.getString("location"));
-                            MainActivity.getInstance().tableDetails.remove(position);
-                            MainActivity.getInstance().alreadyAddedTableNumber.add(jsonObject.getInt("table_number"));
-                            MainActivity.getInstance().tableDetails.add(tableDetail);
-                            MainActivity.updated = true;
+                            TablesFragment.getInstance().tableDetails.remove(position);
+                            TablesFragment.getInstance().alreadyAddedTableNumber.add(jsonObject.getInt("table_number"));
+                            TablesFragment.getInstance().tableDetails.add(tableDetail);
+                            TablesFragment.updated = true;
                             finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -210,7 +224,7 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
         mChairString = mChair.getText().toString();
         mTableLocationString = mTableLocation.getText().toString();
         System.out.println(mChairString + "chairs");
-        if (MainActivity.getInstance().alreadyAddedTableNumber
+        if (TablesFragment.getInstance().alreadyAddedTableNumber
                 .contains(Integer.valueOf(mTableNumberString))) {
             Toast.makeText(this, "This table Number already added", Toast.LENGTH_SHORT).show();
             valid = false;

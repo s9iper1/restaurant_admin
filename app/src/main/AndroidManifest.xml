@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TableDetails"/>
+        <activity android:name=".menu.AddSubCategory"/>
     </application>
 
 </manifest>
