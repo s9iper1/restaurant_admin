@@ -466,7 +466,6 @@ public class SignUp extends Fragment implements View.OnClickListener, GoogleApiC
                                     AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_CLOSING_TIME, closingTime);
                                     Log.i("closingTime", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_CLOSING_TIME));
                                     AccountManagerActivity.getInstance().loadFragment(new AccountActivationCode());
-
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

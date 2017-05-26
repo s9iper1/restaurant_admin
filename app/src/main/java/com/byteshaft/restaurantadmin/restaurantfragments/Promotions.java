@@ -1,6 +1,7 @@
 package com.byteshaft.restaurantadmin.restaurantfragments;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,15 +10,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.byteshaft.requests.HttpRequest;
+import com.byteshaft.restaurantadmin.MainActivity;
 import com.byteshaft.restaurantadmin.R;
+import com.byteshaft.restaurantadmin.accountfragments.AccountActivationCode;
+import com.byteshaft.restaurantadmin.accountfragments.AccountManagerActivity;
+import com.byteshaft.restaurantadmin.accountfragments.ResetPassword;
 import com.byteshaft.restaurantadmin.utils.AppGlobals;
 import com.byteshaft.restaurantadmin.utils.Helpers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.HttpURLConnection;
 import java.util.Calendar;
 
 /**
@@ -71,6 +78,16 @@ public class Promotions extends Fragment implements HttpRequest.OnReadyStateChan
 
     @Override
     public void onReadyStateChange(HttpRequest request, int readyState) {
+        switch (readyState) {
+            case HttpRequest.STATE_DONE:
+                Helpers.dismissProgressDialog();
+                switch (request.getStatus()) {
+                    case HttpURLConnection.HTTP_CREATED:
+                        Toast.makeText(getActivity(), "Promotions has been sent", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        break;
+                }
+        }
 
     }
 
@@ -109,6 +126,8 @@ public class Promotions extends Fragment implements HttpRequest.OnReadyStateChan
         request.setOnReadyStateChangeListener(this);
         request.setOnErrorListener(this);
         request.open("POST", String.format("%spromotions", AppGlobals.BASE_URL));
+        request.setRequestHeader("Authorization", "Token " +
+                AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         request.send(getPromotionsData(startDate, endDate, description, title));
         Helpers.showProgressDialog(getActivity(), "Sending promotions..");
     }
