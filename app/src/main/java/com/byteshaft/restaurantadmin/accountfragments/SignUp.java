@@ -19,7 +19,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -134,10 +133,12 @@ public class SignUp extends Fragment implements View.OnClickListener, GoogleApiC
                 AccountManagerActivity.getInstance().loadFragment(new Login());
                 break;
             case R.id.opening_time_edit_text:
+                isClosingTime = false;
                 timePickerDialog();
 
                 break;
             case R.id.closing_time_edit_text:
+                isClosingTime = true;
                 timePickerDialog();
                 break;
             case R.id.pick_for_current_location:
@@ -395,17 +396,24 @@ public class SignUp extends Fragment implements View.OnClickListener, GoogleApiC
         int minute = mCurrentTime.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker;
         mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                String AMPM ;
+                if(selectedHour < 12) {
+                    AMPM = " AM";
+                } else {
+                    AMPM = " PM";
+                }
                 if (!isClosingTime) {
-                    mOpeningTime.setText(selectedHour + ":" + selectedMinute);
+                    mOpeningTime.setText(selectedHour + ":" + selectedMinute + AMPM);
                     isClosingTime = true;
                 } else {
-                    mClosingTime.setText(selectedHour + ":" + selectedMinute);
+                    mClosingTime.setText(selectedHour + ":" + selectedMinute + AMPM);
                     isClosingTime = false;
                 }
             }
-        }, hour, minute, true);
+        }, hour, minute, false);
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
 

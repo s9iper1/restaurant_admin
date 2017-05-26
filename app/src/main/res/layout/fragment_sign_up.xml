@@ -99,6 +99,8 @@
                         android:background="@drawable/edit_text_background"
                         android:hint="Opening time"
                         android:paddingLeft="10sp"
+                        android:clickable="true"
+                        android:focusable="false"
                         android:paddingTop="@dimen/floating_hint_margin"
                         android:textColor="#fff"
                         android:textSize="15sp" />
@@ -117,6 +119,8 @@
                         android:hint="Closing time"
                         android:paddingLeft="10sp"
                         android:paddingTop="@dimen/floating_hint_margin"
+                        android:clickable="true"
+                        android:focusable="false"
                         android:textColor="#fff"
                         android:textSize="15sp" />
                 </android.support.design.widget.TextInputLayout>
