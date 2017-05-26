@@ -17,12 +17,15 @@ import android.widget.TextView;
 import com.byteshaft.requests.HttpRequest;
 import com.byteshaft.restaurantadmin.R;
 import com.byteshaft.restaurantadmin.utils.AppGlobals;
+import com.byteshaft.restaurantadmin.utils.Helpers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
+
+import static com.byteshaft.restaurantadmin.menu.MenuMain.sAddedNew;
 
 /**
  * Created by s9iper1 on 5/25/17.
@@ -60,6 +63,8 @@ public class AddSubCategory extends AppCompatActivity {
                             Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+                sendData(nameEditText.getText().toString(), priceEdittext.getText().toString()
+                        ,weightEditText.getText().toString());
 
 
             }
@@ -91,7 +96,8 @@ public class AddSubCategory extends AppCompatActivity {
         });
     }
 
-    private void getSubMenu() {
+    private void sendData(String name, String price, String weight) {
+        Snackbar.make(findViewById(android.R.id.content), "processing...", Snackbar.LENGTH_LONG).show();
         HttpRequest request = new HttpRequest(getApplicationContext());
         request.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
             @Override
@@ -100,8 +106,17 @@ public class AddSubCategory extends AppCompatActivity {
                     case HttpRequest.STATE_DONE:
                         Log.i("TAG", request.getResponseURL());
                         switch (request.getStatus()) {
-                            case HttpURLConnection.HTTP_OK:
-                                Log.i("TAG", "SUB" + request.getResponseText());
+                            case HttpURLConnection.HTTP_CREATED:
+                                try {
+                                    JSONObject jsonObject1 = new JSONObject(request.getResponseText());
+                                    JSONArray jsonArray = MenuMain.data.get(selectedMenuId);
+                                    jsonArray.put(jsonObject1);
+                                    MenuMain.data.put(selectedMenuId, jsonArray);
+                                    sAddedNew = true;
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                finish();
                         }
                 }
             }
@@ -109,14 +124,32 @@ public class AddSubCategory extends AppCompatActivity {
         request.setOnErrorListener(new HttpRequest.OnErrorListener() {
             @Override
             public void onError(HttpRequest request, int readyState, short error, Exception exception) {
-                
+                switch (readyState) {
+                    case HttpRequest.ERROR_CONNECTION_TIMED_OUT:
+                        Helpers.showSnackBar(findViewById(android.R.id.content), "Connection Timeout");
+                        break;
+                    case HttpRequest.ERROR_NETWORK_UNREACHABLE:
+                        Helpers.showSnackBar(findViewById(android.R.id.content), exception.getLocalizedMessage());
+                        break;
+                }
             }
         });
-        request.open("GET", String.format("%srestaurants/%s/menu/", AppGlobals.BASE_URL,
-                AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_USER_ID)));
+        request.open("POST", String.format("%srestaurant/menu/", AppGlobals.BASE_URL));
         request.setRequestHeader("Authorization", "Token " +
                 AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
-        request.send();
+        JSONObject jsonObject1 = new JSONObject();
+        try {
+            jsonObject1.put("category", selectedMenuId);
+            jsonObject1.put("name", name);
+            jsonObject1.put("price", price);
+            jsonObject1.put("weight", weight);
+            jsonObject1.put("restaurant",
+                    AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_USER_ID));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        request.send(jsonObject1.toString());
     }
 
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,14 +41,16 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
     private Spinner mSpinner;
     private Adapter adapter;
     private JSONArray spinnerArray;
-    private HashMap<Integer, JSONArray> data;
+    public static HashMap<Integer, JSONArray> data;
+    private ListViewAdapter listViewAdapter;
+    private int selectedCategoryId = -1;
+    public static boolean sAddedNew = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         data = new HashMap<>();
         setHasOptionsMenu(true);
         getCategories();
-        getSubMenu();
         mBaseView = inflater.inflate(R.layout.layout_menu_main, container, false);
         mSpinner = (Spinner) mBaseView.findViewById(R.id.spinner);
         mListView = (ListView) mBaseView.findViewById(R.id.main_list);
@@ -57,7 +60,12 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
                 try {
                     JSONObject jsonObject = spinnerArray.getJSONObject(i);
                     Log.i("TAG", spinnerArray.get(i).toString());
-
+                    selectedCategoryId = jsonObject.getInt("id");
+                    if (data.size() > 0) {
+                        listViewAdapter = new ListViewAdapter(getActivity().getApplicationContext(),
+                                data);
+                        mListView.setAdapter(listViewAdapter);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -69,6 +77,17 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
             }
         });
         return mBaseView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (sAddedNew) {
+            Log.i("TAG", "onresume");
+            listViewAdapter.notifyDataSetChanged();
+            sAddedNew = false;
+        }
+
     }
 
     @Override
@@ -111,6 +130,7 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
                             spinnerArray = new JSONArray(request.getResponseText());
                             adapter = new Adapter(spinnerArray);
                             mSpinner.setAdapter(adapter);
+                            getSubMenu();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -131,6 +151,18 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
                         switch (request.getStatus()) {
                             case HttpURLConnection.HTTP_OK:
                                 Log.i("TAG", "SUB" + request.getResponseText());
+                                try {
+                                    JSONArray jsonArray = new JSONArray(request.getResponseText());
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                                        data.put(jsonObject1.getInt("id"), jsonObject1.getJSONArray("items"));
+                                    }
+                                    listViewAdapter = new ListViewAdapter(getActivity().getApplicationContext(),
+                                            data);
+                                    mListView.setAdapter(listViewAdapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                         }
                 }
             }
@@ -204,14 +236,20 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
         TextView name;
     }
 
-    private class ListViewAdapter extends ArrayAdapter<String> {
+    private class ListViewAdapter extends ArrayAdapter<HashMap<Integer, JSONArray>> {
 
         private ViewHolder viewHolder;
         private JSONArray jsonArray;
 
-        public ListViewAdapter(Context context, JSONArray jsonArray) {
+        public ListViewAdapter(Context context, HashMap<Integer, JSONArray> jsonArrayHashMap) {
             super(context, R.layout.delegate_sub_menu);
-            this.jsonArray = jsonArray;
+            Log.i("TAG", "selected" + selectedCategoryId);
+            Log.i("TAG", "selected" + jsonArrayHashMap.get(selectedCategoryId));
+            jsonArray = jsonArrayHashMap.get(selectedCategoryId);
+            if (jsonArray.length() < 1) {
+                Snackbar.make(MenuMain.this.getView(), "No menu in this category",
+                        Snackbar.LENGTH_SHORT).show();
+            }
         }
 
         @NonNull
@@ -230,17 +268,18 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
             }
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(position);
-
+                viewHolder.name.setText(jsonObject.getString("name"));
+                viewHolder.price.setText(jsonObject.getString("price"));
+                viewHolder.weight.setText(jsonObject.getString("weight"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             return convertView;
-
         }
 
         @Override
         public int getCount() {
-            return super.getCount();
+            return jsonArray.length();
         }
     }
 
