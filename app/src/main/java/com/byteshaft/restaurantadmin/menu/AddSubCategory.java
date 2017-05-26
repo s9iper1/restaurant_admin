@@ -106,7 +106,12 @@ public class AddSubCategory extends AppCompatActivity {
                 }
             }
         });
-        request.setOnErrorListener(this);
+        request.setOnErrorListener(new HttpRequest.OnErrorListener() {
+            @Override
+            public void onError(HttpRequest request, int readyState, short error, Exception exception) {
+                
+            }
+        });
         request.open("GET", String.format("%srestaurants/%s/menu/", AppGlobals.BASE_URL,
                 AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_USER_ID)));
         request.setRequestHeader("Authorization", "Token " +
