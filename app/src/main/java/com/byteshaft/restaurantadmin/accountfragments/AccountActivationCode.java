@@ -150,7 +150,7 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ACCOUNT_TYPE, accountType);
                             Log.i("token", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
                             FragmentManager fragmentManager = getFragmentManager();
-                            Helpers.sendKey(token);
+                            Helpers.sendKey();
                             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } catch (JSONException e) {

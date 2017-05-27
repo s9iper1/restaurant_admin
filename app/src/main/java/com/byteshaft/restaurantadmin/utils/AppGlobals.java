@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.SwitchCompat;
 
 /**
  * Created by husnain on 5/11/17.
@@ -36,7 +35,7 @@ public class AppGlobals extends Application {
     public static final String KEY_OPENING_TIME = "opening_time";
     public static final String KEY_CLOSING_TIME = "closing_time";
     public static final String USER_ACTIVATION_KEY = "activation_key";
-    public static final String KEY_FCM_TOKEN = "token";
+    public static final String KEY_FCM_TOKEN = "fcm_token";
     public static final int LOCATION_ENABLE = 3;
 
 

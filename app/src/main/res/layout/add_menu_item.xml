@@ -66,7 +66,7 @@
                 android:paddingLeft="10sp"
                 android:textSize="15sp"
                 android:paddingTop="@dimen/floating_hint_margin"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textColor="#fff"
                 android:background="@drawable/edit_text_background" />
 

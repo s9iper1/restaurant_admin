@@ -16,7 +16,7 @@ public class FireBaseService extends FirebaseInstanceIdService {
         AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_FCM_TOKEN, token);
         Log.e("TAG", "Token " + token);
         if (AppGlobals.isLogin()) {
-            Helpers.sendKey(token);
+            Helpers.sendKey();
         }
     }
 }

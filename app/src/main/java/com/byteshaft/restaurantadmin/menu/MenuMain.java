@@ -269,7 +269,7 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(position);
                 viewHolder.name.setText(jsonObject.getString("name"));
-                viewHolder.price.setText(jsonObject.getString("price"));
+                viewHolder.price.setText(String.valueOf(jsonObject.getDouble("price")));
                 viewHolder.weight.setText(jsonObject.getString("weight"));
             } catch (JSONException e) {
                 e.printStackTrace();

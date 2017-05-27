@@ -168,7 +168,7 @@ public class Helpers {
         return df.format(c.getTime());
     }
 
-    public static void sendKey(String token) {
+    public static void sendKey() {
         HttpRequest request = new HttpRequest(AppGlobals.getContext());
         request.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
             @Override
@@ -194,7 +194,7 @@ public class Helpers {
         request.open("POST", String.format("%spush_key", AppGlobals.BASE_URL));
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("key", token);
+            jsonObject.put("key", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_FCM_TOKEN));
         } catch (JSONException e) {
             e.printStackTrace();
         }
