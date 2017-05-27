@@ -11,14 +11,10 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.byteshaft.requests.HttpRequest;
 import com.byteshaft.restaurantadmin.MainActivity;
 import com.byteshaft.restaurantadmin.R;
-import com.byteshaft.restaurantadmin.utils.AppGlobals;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-import org.json.JSONObject;
 
 
 public class Service extends FirebaseMessagingService {
@@ -28,6 +24,7 @@ public class Service extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         sendNotification();
+        Log.i("TAG", remoteMessage.getData().toString());
     }
 
     private void sendNotification() {

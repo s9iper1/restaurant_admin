@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -16,6 +14,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
+
+import com.byteshaft.requests.HttpRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -161,6 +166,42 @@ public class Helpers {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return df.format(c.getTime());
+    }
+
+    public static void sendKey(String token) {
+        HttpRequest request = new HttpRequest(AppGlobals.getContext());
+        request.setOnReadyStateChangeListener(new HttpRequest.OnReadyStateChangeListener() {
+            @Override
+            public void onReadyStateChange(HttpRequest httpRequest, int i) {
+                switch (i) {
+                    case HttpRequest.STATE_DONE:
+                        switch (httpRequest.getStatus()) {
+                            case HttpURLConnection.HTTP_OK:
+                                Log.i("TAG", httpRequest.getResponseText());
+                                break;
+                        }
+                }
+            }
+        });
+        request.setOnErrorListener(new HttpRequest.OnErrorListener() {
+            @Override
+            public void onError(HttpRequest httpRequest, int i, short i1, Exception e) {
+
+
+            }
+
+        });
+        request.open("POST", String.format("%spush_key", AppGlobals.BASE_URL));
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("key", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.i("TAG", jsonObject.toString());
+        request.setRequestHeader("Authorization", "Token " +
+                AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
+        request.send(jsonObject.toString());
     }
 
 }
