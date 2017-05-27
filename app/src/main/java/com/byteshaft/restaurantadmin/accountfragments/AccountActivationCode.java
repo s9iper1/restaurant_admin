@@ -7,12 +7,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byteshaft.requests.HttpRequest;
@@ -152,6 +150,7 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
                             AppGlobals.saveDataToSharedPreferences(AppGlobals.KEY_ACCOUNT_TYPE, accountType);
                             Log.i("token", " " + AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
                             FragmentManager fragmentManager = getFragmentManager();
+                            Helpers.sendKey(token);
                             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } catch (JSONException e) {
