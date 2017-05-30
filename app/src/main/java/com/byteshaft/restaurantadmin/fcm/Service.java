@@ -35,7 +35,7 @@ public class Service extends FirebaseMessagingService {
                 stringBuilder.append("Table No " + jsonObject.getInt("table"));
                 stringBuilder.append(" Start Time " + jsonObject.getString("start_time"));
                 stringBuilder.append("End Time " + jsonObject.getString("end_time"));
-                stringBuilder.append(" User "+ jsonObject.getString("booker"));
+//                stringBuilder.append(" User "+ jsonObject.getString("booker"));
                 JSONArray jsonArray = jsonObject.getJSONArray("order");
                 StringBuilder orderDetails = new StringBuilder();
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -47,7 +47,6 @@ public class Service extends FirebaseMessagingService {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         } else if (remoteMessage.getData().get("type").equals("geo_fence")) {
             JSONObject jsonObject = null;
             try {
@@ -57,7 +56,7 @@ public class Service extends FirebaseMessagingService {
                 stringBuilder.append("Order: " + jsonObject.getString("order_details")
                         .replace("[", "").replace("]", ""));
                 stringBuilder.append("Table No " + jsonObject.getInt("table"));
-                sendNotification("New Table Booking", stringBuilder.toString());
+                sendNotification("Table Booking", stringBuilder.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -10,6 +10,12 @@
             android:id="@+id/restaurant_menu"
             android:icon="@drawable/menu"
             android:title="Restaurant menu" />
+
+        <item
+            android:id="@+id/today_orders"
+            android:icon="@drawable/order"
+            android:title="Orders" />
+
         <item
             android:id="@+id/promotions"
             android:icon="@drawable/promotions"

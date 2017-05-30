@@ -131,18 +131,18 @@ public class TableDetails extends AppCompatActivity implements View.OnClickListe
         mRequest = new HttpRequest(this);
         mRequest.setOnReadyStateChangeListener(this);
         mRequest.setOnErrorListener(this);
-        String dialogtext = "Adding table";
+        String dialogText = "Adding table";
         if (method.equals("POST")) {
             url = String.format("%srestaurant/tables/", AppGlobals.BASE_URL);
         } else {
-            dialogtext = "updating table";
+            dialogText = "updating table";
             url = String.format("%srestaurant/tables/%s", AppGlobals.BASE_URL, tableDetail.getId());
         }
         mRequest.open(method, url);
         mRequest.setRequestHeader("Authorization", "Token " +
                 AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         mRequest.send(getTableData(tableNumber, numberOfChairs, minimumBookingTime, location));
-        Helpers.showProgressDialog(TableDetails.this, dialogtext);
+        Helpers.showProgressDialog(TableDetails.this, dialogText);
     }
 
     private String getTableData(String tableNumber, String numberOfChairs, String minimumBookingTime, String location) {

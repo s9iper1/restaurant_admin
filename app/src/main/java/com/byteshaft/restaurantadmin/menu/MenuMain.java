@@ -45,12 +45,14 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
     private ListViewAdapter listViewAdapter;
     private int selectedCategoryId = -1;
     public static boolean sAddedNew = false;
+    private boolean foreground = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         data = new HashMap<>();
         setHasOptionsMenu(true);
         getCategories();
+        foreground = true;
         mBaseView = inflater.inflate(R.layout.layout_menu_main, container, false);
         mSpinner = (Spinner) mBaseView.findViewById(R.id.spinner);
         mListView = (ListView) mBaseView.findViewById(R.id.main_list);
@@ -82,12 +84,19 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
     @Override
     public void onResume() {
         super.onResume();
+        foreground = true;
         if (sAddedNew) {
             Log.i("TAG", "onresume");
             listViewAdapter.notifyDataSetChanged();
             sAddedNew = false;
         }
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        foreground = false;
     }
 
     @Override
@@ -157,9 +166,11 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
                                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                                         data.put(jsonObject1.getInt("id"), jsonObject1.getJSONArray("items"));
                                     }
-                                    listViewAdapter = new ListViewAdapter(getActivity().getApplicationContext(),
-                                            data);
-                                    mListView.setAdapter(listViewAdapter);
+                                    if (foreground) {
+                                        listViewAdapter = new ListViewAdapter(getActivity().getApplicationContext(),
+                                                data);
+                                        mListView.setAdapter(listViewAdapter);
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

@@ -46,13 +46,13 @@ public class AccountManagerActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.container, fragment, backStateName);
         FragmentManager manager = getSupportFragmentManager();
         Log.i("TAG", backStateName);
-//        if (fragment.isVisible()) {
-        boolean fragmentPopped = manager.popBackStackImmediate(backStateName, 0);
-        if (!fragmentPopped) {
+////        if (fragment.isVisible()) {
+//        boolean fragmentPopped = manager.popBackStackImmediate(backStateName, 0);
+//        if (!fragmentPopped) {
             fragmentTransaction.addToBackStack(backStateName);
             fragmentTransaction.commit();
 //            }
-        }
+//        }
     }
 
     @Override

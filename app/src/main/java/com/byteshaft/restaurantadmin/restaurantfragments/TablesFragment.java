@@ -19,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.byteshaft.requests.HttpRequest;
+import com.byteshaft.restaurantadmin.MainActivity;
 import com.byteshaft.restaurantadmin.R;
 import com.byteshaft.restaurantadmin.TableDetails;
+import com.byteshaft.restaurantadmin.gettersetter.OrderDetails;
 import com.byteshaft.restaurantadmin.gettersetter.TableDetail;
 import com.byteshaft.restaurantadmin.utils.AppGlobals;
 import com.byteshaft.restaurantadmin.utils.Helpers;
@@ -53,8 +55,6 @@ public class TablesFragment extends Fragment implements View.OnClickListener, Ad
     public static TablesFragment getInstance() {
         return sInstance;
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -171,6 +171,29 @@ public class TablesFragment extends Fragment implements View.OnClickListener, Ad
                                 alreadyAddedTableNumber.add(jsonObject.getInt("table_number"));
                                 tableDetails.add(tableDetail);
                                 tableAdapter.notifyDataSetChanged();
+
+                                JSONArray bookings = jsonObject.getJSONArray("bookings");
+                                Log.i("TAG", "booking " + bookings);
+                                for (int j = 0; j < bookings.length(); j++) {
+                                    JSONObject booking = bookings.getJSONObject(j);
+                                    JSONArray orderArray = booking.getJSONArray("order");
+                                    ArrayList<OrderDetails> orderDetailses = new ArrayList<>();
+                                    for (int k = 0; k < orderArray.length(); k++) {
+                                        JSONObject order = orderArray.getJSONObject(k);
+                                        OrderDetails orderDetails = new OrderDetails();
+                                        orderDetails.setTableNumber("Table #: "+booking.getInt("table"));
+                                        orderDetails.setStartEndTime("start time:"+booking
+                                                .getString("start_time") + " end Time: " +
+                                                booking.getString("end_time"));
+                                        orderDetails.setOrderDetails("Order:"+
+                                                order.getString("name") + "(" +order.getDouble("weight")
+                                                + ")" + " price:" + order.getDouble("price"));
+                                        orderDetailses.add(orderDetails);
+                                    }
+                                    Log.i("TAG", booking.getString("date"));
+                                    MainActivity.sHashMap.put(booking.getString("date"), orderDetailses);
+                                }
+
                             }
                             currentArraySize = tableDetails.size();
                         } catch (JSONException e) {

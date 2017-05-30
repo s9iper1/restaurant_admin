@@ -67,9 +67,6 @@ public class AccountActivationCode extends Fragment implements View.OnClickListe
                 }
 
                 break;
-            case R.id.sign_up_text_view:
-                break;
-
         }
     }
 

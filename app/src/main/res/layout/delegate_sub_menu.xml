@@ -10,7 +10,7 @@
         android:id="@+id/menu_item_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
+        android:textColor="@android:color/white"
         android:layout_margin="5dp"
         android:padding="5dp"
         android:textSize="20sp"
@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:textStyle="italic"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
+        android:textColor="@android:color/white"
         android:layout_margin="5dp"
         android:padding="5dp"
         android:layout_weight="2"/>
@@ -32,7 +32,7 @@
         android:layout_width="0dp"
         android:textStyle="italic"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
+        android:textColor="@android:color/white"
         android:layout_margin="5dp"
         android:padding="5dp"
         android:layout_weight="1"/>

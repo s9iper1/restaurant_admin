@@ -18,20 +18,28 @@ import android.widget.TextView;
 
 import com.byteshaft.restaurantadmin.accountfragments.ChangePassword;
 import com.byteshaft.restaurantadmin.accountfragments.Login;
+import com.byteshaft.restaurantadmin.gettersetter.OrderDetails;
 import com.byteshaft.restaurantadmin.menu.MenuMain;
 import com.byteshaft.restaurantadmin.restaurantfragments.Promotions;
 import com.byteshaft.restaurantadmin.restaurantfragments.TablesFragment;
+import com.byteshaft.restaurantadmin.restaurantfragments.TodayOrders;
 import com.byteshaft.restaurantadmin.restaurantfragments.UpdateRestaurant;
 import com.byteshaft.restaurantadmin.utils.AppGlobals;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static HashMap<String, ArrayList<OrderDetails>> sHashMap;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sHashMap = new HashMap<>();
         Log.i("TAG", AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_TOKEN));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,6 +97,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.change_password) {
             loadFragment(new ChangePassword());
+
+        } else if (id == R.id.today_orders) {
+            loadFragment(new TodayOrders());
 
         } else if (id == R.id.admin_logout) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
