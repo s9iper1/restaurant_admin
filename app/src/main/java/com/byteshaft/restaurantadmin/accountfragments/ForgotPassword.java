@@ -2,10 +2,8 @@ package com.byteshaft.restaurantadmin.accountfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -104,6 +102,11 @@ public class ForgotPassword extends Fragment implements View.OnClickListener, Ht
                 Helpers.showSnackBar(getView(), exception.getLocalizedMessage());
                 break;
         }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
 
     }
 

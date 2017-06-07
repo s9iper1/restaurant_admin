@@ -4,9 +4,6 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
-/**
- * Created by s9iper1 on 5/22/17.
- */
 
 public class TableDetail  implements Serializable{
 

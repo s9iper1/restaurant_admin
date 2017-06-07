@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 /**
  * Created by husnain on 5/11/17.
  */
@@ -55,7 +57,9 @@ public class AppGlobals extends Application {
 
     public static void clearSettings() {
         SharedPreferences sharedPreferences = getPreferenceManager();
-        sharedPreferences.edit().clear().apply();
+        sharedPreferences.edit().clear().commit();
+        FirebaseInstanceId.getInstance().getToken();
+
     }
 
     public static void saveDataToSharedPreferences(String key, String value) {

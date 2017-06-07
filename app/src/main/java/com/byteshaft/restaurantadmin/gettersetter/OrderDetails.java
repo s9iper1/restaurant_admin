@@ -1,10 +1,12 @@
 package com.byteshaft.restaurantadmin.gettersetter;
 
+import java.io.Serializable;
+
 /**
  * Created by s9iper1 on 5/30/17.
  */
 
-public class OrderDetails {
+public class OrderDetails implements Serializable{
 
     private String TableNumber;
     private String startEndTime;

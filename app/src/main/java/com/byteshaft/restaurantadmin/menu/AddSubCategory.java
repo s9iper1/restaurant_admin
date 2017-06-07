@@ -94,6 +94,7 @@ public class AddSubCategory extends AppCompatActivity {
 
             }
         });
+        mSpinner.setSelection(MenuMain.mSpinner.getSelectedItemPosition());
     }
 
     private void sendData(String name, String price, String weight) {

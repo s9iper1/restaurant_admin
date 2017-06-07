@@ -38,7 +38,7 @@ public class MenuMain extends Fragment implements HttpRequest.OnReadyStateChange
 
     private View mBaseView;
     private ListView mListView;
-    private Spinner mSpinner;
+    public static Spinner mSpinner;
     private Adapter adapter;
     private JSONArray spinnerArray;
     public static HashMap<Integer, JSONArray> data;

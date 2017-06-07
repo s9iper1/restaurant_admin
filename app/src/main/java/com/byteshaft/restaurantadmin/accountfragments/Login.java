@@ -18,6 +18,7 @@ import com.byteshaft.restaurantadmin.MainActivity;
 import com.byteshaft.restaurantadmin.R;
 import com.byteshaft.restaurantadmin.utils.AppGlobals;
 import com.byteshaft.restaurantadmin.utils.Helpers;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -139,6 +140,7 @@ public class Login extends Fragment implements View.OnClickListener, HttpRequest
 
                     case HttpURLConnection.HTTP_OK:
                         System.out.println(request.getResponseText() + "working ");
+                        FirebaseInstanceId.getInstance().getToken();
                         try {
                             JSONObject jsonObject = new JSONObject(request.getResponseText());
                             String token = jsonObject.getString(AppGlobals.KEY_TOKEN);

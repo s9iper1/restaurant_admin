@@ -34,7 +34,7 @@ public class Service extends FirebaseMessagingService {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("Table No " + jsonObject.getInt("table"));
                 stringBuilder.append(" Start Time " + jsonObject.getString("start_time"));
-                stringBuilder.append("End Time " + jsonObject.getString("end_time"));
+                stringBuilder.append(" End Time " + jsonObject.getString("end_time"));
 //                stringBuilder.append(" User "+ jsonObject.getString("booker"));
                 JSONArray jsonArray = jsonObject.getJSONArray("order");
                 StringBuilder orderDetails = new StringBuilder();
@@ -42,7 +42,7 @@ public class Service extends FirebaseMessagingService {
                     JSONObject json = jsonArray.getJSONObject(i);
                     orderDetails.append(json.getString("name") + " (" + json.getDouble("price") + ")");
                 }
-                stringBuilder.append("order menu " + orderDetails.toString());
+                stringBuilder.append(" order menu " + orderDetails.toString());
                 sendNotification("New Table Booking", stringBuilder.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
