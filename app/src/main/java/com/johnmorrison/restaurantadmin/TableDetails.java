@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin;
+package com.johnmorrison.restaurantadmin;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,10 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byteshaft.requests.HttpRequest;
-import com.byteshaft.restaurantadmin.gettersetter.TableDetail;
-import com.byteshaft.restaurantadmin.restaurantfragments.TablesFragment;
-import com.byteshaft.restaurantadmin.utils.AppGlobals;
-import com.byteshaft.restaurantadmin.utils.Helpers;
+import com.byteshaft.restaurantadmin.R;
+import com.johnmorrison.restaurantadmin.gettersetter.TableDetail;
+import com.johnmorrison.restaurantadmin.restaurantfragments.TablesFragment;
+import com.johnmorrison.restaurantadmin.utils.AppGlobals;
+import com.johnmorrison.restaurantadmin.utils.Helpers;
 
 import org.json.JSONException;
 import org.json.JSONObject;

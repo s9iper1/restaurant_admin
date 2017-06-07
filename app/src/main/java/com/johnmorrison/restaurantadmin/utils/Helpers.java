@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin.utils;
+package com.johnmorrison.restaurantadmin.utils;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

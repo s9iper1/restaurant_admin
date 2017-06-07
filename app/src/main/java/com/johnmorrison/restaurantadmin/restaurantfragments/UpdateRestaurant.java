@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin.restaurantfragments;
+package com.johnmorrison.restaurantadmin.restaurantfragments;
 
 import android.Manifest;
 import android.app.TimePickerDialog;
@@ -28,13 +28,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.byteshaft.requests.HttpRequest;
-import com.byteshaft.restaurantadmin.MainActivity;
+import com.johnmorrison.restaurantadmin.MainActivity;
 import com.byteshaft.restaurantadmin.R;
-import com.byteshaft.restaurantadmin.accountfragments.AccountActivationCode;
-import com.byteshaft.restaurantadmin.accountfragments.AccountManagerActivity;
-import com.byteshaft.restaurantadmin.accountfragments.SignUp;
-import com.byteshaft.restaurantadmin.utils.AppGlobals;
-import com.byteshaft.restaurantadmin.utils.Helpers;
+import com.johnmorrison.restaurantadmin.utils.AppGlobals;
+import com.johnmorrison.restaurantadmin.utils.Helpers;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -43,7 +40,6 @@ import com.google.android.gms.location.LocationServices;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.Calendar;

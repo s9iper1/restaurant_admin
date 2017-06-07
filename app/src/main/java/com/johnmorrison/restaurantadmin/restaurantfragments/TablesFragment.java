@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin.restaurantfragments;
+package com.johnmorrison.restaurantadmin.restaurantfragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,13 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.byteshaft.requests.HttpRequest;
-import com.byteshaft.restaurantadmin.MainActivity;
+import com.johnmorrison.restaurantadmin.MainActivity;
 import com.byteshaft.restaurantadmin.R;
-import com.byteshaft.restaurantadmin.TableDetails;
-import com.byteshaft.restaurantadmin.gettersetter.OrderDetails;
-import com.byteshaft.restaurantadmin.gettersetter.TableDetail;
-import com.byteshaft.restaurantadmin.utils.AppGlobals;
-import com.byteshaft.restaurantadmin.utils.Helpers;
+import com.johnmorrison.restaurantadmin.TableDetails;
+import com.johnmorrison.restaurantadmin.gettersetter.OrderDetails;
+import com.johnmorrison.restaurantadmin.gettersetter.TableDetail;
+import com.johnmorrison.restaurantadmin.utils.AppGlobals;
+import com.johnmorrison.restaurantadmin.utils.Helpers;
 
 import org.json.JSONArray;
 import org.json.JSONException;

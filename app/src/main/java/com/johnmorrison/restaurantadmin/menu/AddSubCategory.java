@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin.menu;
+package com.johnmorrison.restaurantadmin.menu;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -16,16 +16,14 @@ import android.widget.TextView;
 
 import com.byteshaft.requests.HttpRequest;
 import com.byteshaft.restaurantadmin.R;
-import com.byteshaft.restaurantadmin.utils.AppGlobals;
-import com.byteshaft.restaurantadmin.utils.Helpers;
+import com.johnmorrison.restaurantadmin.utils.AppGlobals;
+import com.johnmorrison.restaurantadmin.utils.Helpers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
-
-import static com.byteshaft.restaurantadmin.menu.MenuMain.sAddedNew;
 
 /**
  * Created by s9iper1 on 5/25/17.
@@ -113,7 +111,7 @@ public class AddSubCategory extends AppCompatActivity {
                                     JSONArray jsonArray = MenuMain.data.get(selectedMenuId);
                                     jsonArray.put(jsonObject1);
                                     MenuMain.data.put(selectedMenuId, jsonArray);
-                                    sAddedNew = true;
+                                    MenuMain.sAddedNew = true;
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

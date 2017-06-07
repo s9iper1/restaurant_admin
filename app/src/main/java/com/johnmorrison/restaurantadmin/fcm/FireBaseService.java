@@ -1,9 +1,9 @@
-package com.byteshaft.restaurantadmin.fcm;
+package com.johnmorrison.restaurantadmin.fcm;
 
 import android.util.Log;
 
-import com.byteshaft.restaurantadmin.utils.AppGlobals;
-import com.byteshaft.restaurantadmin.utils.Helpers;
+import com.johnmorrison.restaurantadmin.utils.AppGlobals;
+import com.johnmorrison.restaurantadmin.utils.Helpers;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 

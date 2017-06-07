@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin;
+package com.johnmorrison.restaurantadmin;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -16,15 +16,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.byteshaft.restaurantadmin.accountfragments.ChangePassword;
-import com.byteshaft.restaurantadmin.accountfragments.Login;
-import com.byteshaft.restaurantadmin.gettersetter.OrderDetails;
-import com.byteshaft.restaurantadmin.menu.MenuMain;
-import com.byteshaft.restaurantadmin.restaurantfragments.Promotions;
-import com.byteshaft.restaurantadmin.restaurantfragments.TablesFragment;
-import com.byteshaft.restaurantadmin.restaurantfragments.TodayOrders;
-import com.byteshaft.restaurantadmin.restaurantfragments.UpdateRestaurant;
-import com.byteshaft.restaurantadmin.utils.AppGlobals;
+import com.byteshaft.restaurantadmin.R;
+import com.johnmorrison.restaurantadmin.accountfragments.ChangePassword;
+import com.johnmorrison.restaurantadmin.accountfragments.Login;
+import com.johnmorrison.restaurantadmin.gettersetter.OrderDetails;
+import com.johnmorrison.restaurantadmin.menu.MenuMain;
+import com.johnmorrison.restaurantadmin.restaurantfragments.Promotions;
+import com.johnmorrison.restaurantadmin.restaurantfragments.TablesFragment;
+import com.johnmorrison.restaurantadmin.restaurantfragments.TodayOrders;
+import com.johnmorrison.restaurantadmin.restaurantfragments.UpdateRestaurant;
+import com.johnmorrison.restaurantadmin.utils.AppGlobals;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin.accountfragments;
+package com.johnmorrison.restaurantadmin.accountfragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.byteshaft.requests.HttpRequest;
-import com.byteshaft.restaurantadmin.MainActivity;
+import com.johnmorrison.restaurantadmin.MainActivity;
 import com.byteshaft.restaurantadmin.R;
-import com.byteshaft.restaurantadmin.utils.AppGlobals;
-import com.byteshaft.restaurantadmin.utils.Helpers;
+import com.johnmorrison.restaurantadmin.utils.AppGlobals;
+import com.johnmorrison.restaurantadmin.utils.Helpers;
 
 import org.json.JSONException;
 import org.json.JSONObject;

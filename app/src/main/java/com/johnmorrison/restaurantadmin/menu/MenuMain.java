@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin.menu;
+package com.johnmorrison.restaurantadmin.menu;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,8 +23,8 @@ import android.widget.TextView;
 
 import com.byteshaft.requests.HttpRequest;
 import com.byteshaft.restaurantadmin.R;
-import com.byteshaft.restaurantadmin.utils.AppGlobals;
-import com.byteshaft.restaurantadmin.utils.Helpers;
+import com.johnmorrison.restaurantadmin.utils.AppGlobals;
+import com.johnmorrison.restaurantadmin.utils.Helpers;
 
 import org.json.JSONArray;
 import org.json.JSONException;

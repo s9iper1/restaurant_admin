@@ -5,35 +5,35 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
-        android:name=".utils.AppGlobals"
+        android:name="com.johnmorrison.restaurantadmin.utils.AppGlobals"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.johnmorrison.restaurantadmin.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".accountfragments.AccountManagerActivity"
+            android:name="com.johnmorrison.restaurantadmin.accountfragments.AccountManagerActivity"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TableDetails"/>
-        <activity android:name=".menu.AddSubCategory"/>
+        <activity android:name="com.johnmorrison.restaurantadmin.TableDetails"/>
+        <activity android:name="com.johnmorrison.restaurantadmin.menu.AddSubCategory"/>
         <service
-            android:name=".fcm.FireBaseService">
+            android:name="com.johnmorrison.restaurantadmin.fcm.FireBaseService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
         <service
-            android:name=".fcm.Service">
+            android:name="com.johnmorrison.restaurantadmin.fcm.Service">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>

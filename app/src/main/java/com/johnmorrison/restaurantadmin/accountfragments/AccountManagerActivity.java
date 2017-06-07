@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin.accountfragments;
+package com.johnmorrison.restaurantadmin.accountfragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.byteshaft.restaurantadmin.MainActivity;
+import com.johnmorrison.restaurantadmin.MainActivity;
 import com.byteshaft.restaurantadmin.R;
-import com.byteshaft.restaurantadmin.utils.AppGlobals;
+import com.johnmorrison.restaurantadmin.utils.AppGlobals;
 
 /**
  * Created by s9iper1 on 3/16/17.

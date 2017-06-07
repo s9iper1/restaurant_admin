@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin.restaurantfragments;
+package com.johnmorrison.restaurantadmin.restaurantfragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,10 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.byteshaft.restaurantadmin.MainActivity;
+import com.johnmorrison.restaurantadmin.MainActivity;
 import com.byteshaft.restaurantadmin.R;
-import com.byteshaft.restaurantadmin.gettersetter.OrderDetails;
-import com.byteshaft.restaurantadmin.utils.Helpers;
+import com.johnmorrison.restaurantadmin.gettersetter.OrderDetails;
+import com.johnmorrison.restaurantadmin.utils.Helpers;
 
 import java.util.ArrayList;
 

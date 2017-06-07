@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin.gettersetter;
+package com.johnmorrison.restaurantadmin.gettersetter;
 
 import org.json.JSONObject;
 

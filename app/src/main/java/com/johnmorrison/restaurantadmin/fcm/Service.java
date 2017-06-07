@@ -1,4 +1,4 @@
-package com.byteshaft.restaurantadmin.fcm;
+package com.johnmorrison.restaurantadmin.fcm;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,7 +11,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.byteshaft.restaurantadmin.MainActivity;
+import com.johnmorrison.restaurantadmin.MainActivity;
 import com.byteshaft.restaurantadmin.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
